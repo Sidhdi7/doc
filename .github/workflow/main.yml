@@ -32,20 +32,21 @@ jobs:
       run: uname -a
 
     greet-contributor:
-    name: 👋 Greet First-Time Contributor
-    runs-on: ubuntu-latest
-    if: github.event_name == 'pull_request' && github.event.pull_request.user.login != github.repository_owner
-    steps:
-      - name: 💬 Post welcome comment
-        uses: actions/github-script@v6
-        with:
-          script: |
-            github.rest.issues.createComment({
-              issue_number: context.payload.pull_request.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: "🎉 Welcome to the project, @${{ github.actor }}! Thanks for contributing! 🚀"
+      name: 👋 Greet First-Time Contributor
+      runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request' && github.event.pull_request.user.login != github.repository.owner
+      steps:
+        - name: 💬 Post welcome comment
+          uses: actions/github-script@v6
+          with:
+            script: |
+              github.rest.issues.createComment({
+                issue_number: context.payload.pull_request.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body: "🎉 Welcome to the project, @${{ github.actor }}! Thanks for your contribution 🚀"
             })
+
 
   log-success:
     name: ✅ Log Completion
