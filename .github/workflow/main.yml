@@ -12,46 +12,45 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: ✅ Checkout code
-      uses: actions/checkout@v3
+      - name: ✅ Checkout code
+        uses: actions/checkout@v3
 
-    - name: 🧰 Set up Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '18'
+      - name: 🧰 Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
 
-    - name: 📦 Install dependencies
-      run: npm install
+      - name: 📦 Install dependencies
+        run: npm install
 
-    - name: 🧪 Run tests (if any)
-      run: |
-        echo "No tests defined yet"
-        # npm test  # Uncomment if you add tests later
+      - name: 🧪 Run tests (if any)
+        run: |
+          echo "No tests defined yet"
+          # npm test
 
-    - name: 🐧 Show runner environment
-      run: uname -a
+      - name: 🐧 Show runner environment
+        run: uname -a
 
-    greet-contributor:
-      name: 👋 Greet First-Time Contributor
-      runs-on: ubuntu-latest
+  greet-contributor:
+    name: 👋 Greet First-Time Contributor
+    runs-on: ubuntu-latest
     if: github.event_name == 'pull_request' && github.event.pull_request.user.login != github.repository.owner
-      steps:
-        - name: 💬 Post welcome comment
-          uses: actions/github-script@v6
-          with:
-            script: |
-              github.rest.issues.createComment({
-                issue_number: context.payload.pull_request.number,
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                body: "🎉 Welcome to the project, @${{ github.actor }}! Thanks for your contribution 🚀"
+    steps:
+      - name: 💬 Post welcome comment
+        uses: actions/github-script@v6
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.payload.pull_request.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: "🎉 Welcome to the project, @${{ github.actor }}! Thanks for your contribution 🚀"
             })
-
 
   log-success:
     name: ✅ Log Completion
     runs-on: ubuntu-latest
     needs: build
     steps:
-    - name: 🎯 Final log
-      run: echo "🎉 All CI jobs completed successfully on Ubuntu!"
+      - name: 🎯 Final log
+        run: echo "🎉 All CI jobs completed successfully on Ubuntu!"
